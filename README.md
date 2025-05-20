@@ -1,7 +1,7 @@
-Générateur de Devis Skoda
+# Générateur de Devis Skoda
 Une application web simple et efficace pour générer des devis personnalisés pour les véhicules Skoda.
 
-Fonctionnalités,
+# Fonctionnalités,
 Formulaire de saisie des informations client,
 Sélection du modèle de véhicule Skoda,
 Calcul automatique des prix,
@@ -9,22 +9,23 @@ Génération d'un devis professionnel et imprimable,
 Interface responsive et moderne,
 Support de l'impression,
 
-Technologies utilisées,
+# Technologies utilisées,
 HTML5,
 CSS3,
 JavaScript (Vanilla),
 
-Installation,
+# Installation,
 Clonez ce dépôt ou téléchargez les fichiers,
 Assurez-vous d'avoir les trois fichiers suivants dans le même dossier :
 index.html,
 styles.css,
 script.js,
-,
+
+
 Ajoutez le logo Skoda (logo_skoda.png) dans le même dossier,
 Ouvrez index.html dans votre navigateur web,
 
-Utilisation,
+# Utilisation
 Remplissez le formulaire avec les informations du client :
 Nom et prénom,
 Entreprise (optionnel),
@@ -43,20 +44,23 @@ Les détails du devis,
 La date de génération,
 ,
 
-Options disponibles :
+# Options disponibles :
 Imprimer le devis,
 Annuler et recommencer,
 ,
 
-Structure des fichiers,
-generateurDevisAAA/
+# generateurDevisAAA/
+
 ├── index.html      # Structure de la page
+
 ├── styles.css      # Styles et mise en page
+
 ├── script.js       # Logique de l'application
+
 └── logo_skoda.png  # Logo de l'entreprise
 
 
-Personnalisation,
+# Personnalisation,
 Vous pouvez personnaliser :
 Les couleurs dans styles.css,
 Les informations de l'entreprise dans script.js,
