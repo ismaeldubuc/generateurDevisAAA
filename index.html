@@ -128,11 +128,17 @@
         <option value="Enyaq">Skoda Enyaq</option>
       </select>
 
+      <label for="achatType">Type d'achat</label>
+      <select id="achatType" name="achatType" required>
+        <option value="vente">Vente</option>
+        <option value="leasing">Leasing</option>
+      </select>
+
       <label for="prix">Prix estimé (€)</label>
-      <input type="number" id="prix" name="prix" required min="0" step="0.01">
+      <input type="number" id="prix" name="prix" required min="0" step="0.01" readonly>
 
       <label for="tva">TVA (€)</label>
-      <input type="number" id="tva" name="tva" required min="0" step="0.01">
+      <input type="number" id="tva" name="tva" required min="0" step="0.01" readonly>
 
       <label for="description">Description</label>
       <textarea id="description" name="description" rows="4"></textarea>
@@ -143,6 +149,69 @@
     <section id="output" aria-live="polite">
     </section>
   </main>
+  <script>
+    (function () {
+      const modelePrix = {
+        Fabia: 15000,
+        Octavia: 22000,
+        Karoq: 28000,
+        Kodiaq: 32000,
+        Superb: 35000,
+        Enyaq: 40000
+      };
+
+      const modeleSelect = document.getElementById('modele');
+      const achatTypeSelect = document.getElementById('achatType');
+      const prixInput = document.getElementById('prix');
+      const tvaInput = document.getElementById('tva');
+
+      function updatePrix() {
+        const modele = modeleSelect.value;
+        const achatType = achatTypeSelect.value;
+        let prix = modelePrix[modele] || 0;
+
+        if (achatType === 'leasing') {
+          prix = prix / 36; // mensualité sur 36 mois
+        }
+
+        prixInput.value = prix.toFixed(2);
+        tvaInput.value = (prix * 0.2).toFixed(2);
+      }
+
+      modeleSelect.addEventListener('change', updatePrix);
+      achatTypeSelect.addEventListener('change', updatePrix);
+
+      document.getElementById('quoteForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const nom = document.getElementById('nom').value;
+        const prenom = document.getElementById('prenom').value;
+        const entreprise = document.getElementById('entreprise').value;
+        const modele = modeleSelect.value;
+        const prix = prixInput.value;
+        const tva = tvaInput.value;
+        const description = document.getElementById('description').value;
+        const achatType = achatTypeSelect.value;
+
+        const total = (parseFloat(prix) + parseFloat(tva)).toFixed(2);
+
+        const outputHTML = `
+          <h2>Devis généré</h2>
+          <p><strong>Client :</strong> ${prenom} ${nom}${entreprise ? ` (${entreprise})` : ''}</p>
+          <p><strong>Modèle :</strong> Skoda ${modele}</p>
+          <p><strong>Type d'achat :</strong> ${achatType === 'leasing' ? 'Leasing (36 mois)' : 'Vente'}</p>
+          <p><strong>Prix HT :</strong> ${prix} €</p>
+          <p><strong>TVA (20%) :</strong> ${tva} €</p>
+          <p><strong>Total TTC :</strong> ${total} €</p>
+          <p><strong>Description :</strong><br>${description}</p>
+        `;
+
+        const output = document.getElementById('output');
+        output.innerHTML = outputHTML;
+        output.classList.add('visible');
+      });
+    })();
+  </script>
   <script src="script.js"></script>
 </body>
 </html>
