@@ -1,4 +1,4 @@
-Générateur de Devis Skoda,
+Générateur de Devis Skoda
 Une application web simple et efficace pour générer des devis personnalisés pour les véhicules Skoda.
 
 Fonctionnalités,
