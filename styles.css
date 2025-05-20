@@ -78,13 +78,13 @@ section[aria-live="polite"]:not(:empty) {
   form {
     display: none;
   }
-
+  
   body {
     color: #000;
     background: #fff;
   }
-
+  
   section {
     border: none;
   }
-} 
+}

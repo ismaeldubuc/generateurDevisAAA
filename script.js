@@ -1,52 +1,98 @@
-document.getElementById('quoteForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  const nom = document.getElementById('nom').value;
-  const prenom = document.getElementById('prenom').value;
-  const entreprise = document.getElementById('entreprise').value;
-  const modele = document.getElementById('modele').value;
-  const prix = document.getElementById('prix').value;
-  const description = document.getElementById('description').value;
+(function () {
+  const modelePrix = {
+    Fabia: 15000,
+    Octavia: 22000,
+    Karoq: 28000,
+    Kodiaq: 32000,
+    Superb: 35000,
+    Enyaq: 40000
+  };
 
-  const output = `
-    <div class="logo-container">
-      <img src="logo_skoda.png" alt="Logo Skoda" width="100" height="100">
-    </div>
-    <h2>Devis personnalisé - Voiture SKODA</h2>
+  const modeleSelect = document.getElementById('modele');
+  const achatTypeSelect = document.getElementById('achatType');
+  const prixInput = document.getElementById('prix');
+  const tvaInput = document.getElementById('tva');
 
-    <h3>Informations de l'entreprise</h3>
-    <p><strong>Nom :</strong> Le Continent</p>
-    <p><strong>Adresse :</strong> 27 Bis Rue du Progrès, 93100 Montreuil</p>
-    <p><strong>Numéro SIRET :</strong> 493 361 372 00011</p>
-    <p><strong>Téléphone :</strong> 01 23 45 67 89</p>
-    <p><strong>Email :</strong> contact@lecontinent.fr</p>
+  function updatePrix() {
+    const modele = modeleSelect.value;
+    const achatType = achatTypeSelect.value;
+    let prix = modelePrix[modele] || 0;
 
-    <hr>
+    if (achatType === 'leasing') {
+      prix = prix / 36; 
+    }
 
-    <h3>Informations client</h3>
-    <p><strong>Nom :</strong> ${nom}</p>
-    <p><strong>Prénom :</strong> ${prenom}</p>
-    ${entreprise ? `<p><strong>Entreprise :</strong> ${entreprise}</p>` : ''}
+    prixInput.value = prix.toFixed(2);
+    tvaInput.value = (prix * 0.2).toFixed(2);
+  }
 
-    <hr>
+  modeleSelect.addEventListener('change', updatePrix);
+  achatTypeSelect.addEventListener('change', updatePrix);
 
-    <h3>Détails du devis</h3>
-    <p><strong>Modèle :</strong> Skoda ${modele}</p>
-    <p><strong>Description :</strong> ${description}</p>
-    <p><strong>Montant estimé :</strong> ${parseFloat(prix).toFixed(2)} €</p>
-    <p><em>Date :</em> ${new Date().toLocaleDateString('fr-FR')}</p>
+  function annulerImpression() {
+    const outputSection = document.getElementById('output');
+    outputSection.innerHTML = '';
+    outputSection.classList.remove('visible');
+    document.getElementById('quoteForm').reset();
+  }
+  
+  window.annulerImpression = annulerImpression;
 
-    <button class="no-print" onclick="window.print()">Imprimer</button>
-    <button class="no-print" onclick="annulerImpression()">Annuler</button>
-  `;
+  document.getElementById('quoteForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    
+    const nom = document.getElementById('nom').value;
+    const prenom = document.getElementById('prenom').value;
+    const entreprise = document.getElementById('entreprise').value;
+    const modele = modeleSelect.value;
+    const prix = prixInput.value;
+    const tva = tvaInput.value;
+    const description = document.getElementById('description').value;
+    const achatType = achatTypeSelect.value;
 
-  const outputSection = document.getElementById('output');
-  outputSection.innerHTML = output;
-  outputSection.classList.add('visible');
-});
+    // Calcul du total
+    const total = (parseFloat(prix) + parseFloat(tva)).toFixed(2);
 
-function annulerImpression() {
-  const outputSection = document.getElementById('output');
-  outputSection.innerHTML = '';
-  outputSection.classList.remove('visible');
-  document.getElementById('quoteForm').reset();
-} 
+    // Génération du HTML pour le devis
+    const output = `
+      <div class="logo-container">
+        <img src="logo_skoda.png" alt="Logo Skoda" width="100" height="100">
+      </div>
+      <h2>Devis personnalisé - Voiture SKODA</h2>
+
+      <h3>Informations de l'entreprise</h3>
+      <p><strong>Nom :</strong> Le Continent</p>
+      <p><strong>Adresse :</strong> 27 Bis Rue du Progrès, 93100 Montreuil</p>
+      <p><strong>Numéro SIRET :</strong> 493 361 372 00011</p>
+      <p><strong>Téléphone :</strong> 01 23 45 67 89</p>
+      <p><strong>Email :</strong> contact@lecontinent.fr</p>
+
+      <hr>
+
+      <h3>Informations client</h3>
+      <p><strong>Nom :</strong> ${nom}</p>
+      <p><strong>Prénom :</strong> ${prenom}</p>
+      ${entreprise ? `<p><strong>Entreprise :</strong> ${entreprise}</p>` : ''}
+
+      <hr>
+
+      <h3>Détails du devis</h3>
+      <p><strong>Modèle :</strong> Skoda ${modele}</p>
+      <p><strong>Type d'achat :</strong> ${achatType === 'leasing' ? 'Leasing (36 mois)' : 'Vente'}</p>
+      <p><strong>Description :</strong> ${description}</p>
+      <p><strong>Prix HT :</strong> ${prix} €</p>
+      <p><strong>TVA (20%) :</strong> ${tva} €</p>
+      <p><strong>Montant total TTC :</strong> ${total} €</p>
+      <p><em>Date :</em> ${new Date().toLocaleDateString('fr-FR')}</p>
+
+      <button class="no-print" onclick="window.print()">Imprimer</button>
+      <button class="no-print" onclick="annulerImpression()">Annuler</button>
+    `;
+
+    const outputSection = document.getElementById('output');
+    outputSection.innerHTML = output;
+    outputSection.classList.add('visible');
+  });
+  
+  updatePrix();
+})();
