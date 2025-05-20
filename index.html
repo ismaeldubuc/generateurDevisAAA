@@ -1,57 +1,101 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8">
-  <title>Générateur de Devis</title>
+  <title>Devis Skoda</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Générez rapidement un devis pour les véhicules Skoda. Choisissez un modèle (Fabia, Octavia, Karoq, etc.), renseignez les informations client, et obtenez un devis clair, imprimable et professionnel.">
+
   <style>
     body {
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background-color: #fff;
-      color: #000;
+      color: #333;
       padding: 2rem;
-      max-width: 700px;
+      max-width: 800px;
       margin: auto;
       line-height: 1.6;
     }
+
     h1 {
-      font-size: 1.5rem;
+      font-size: 2rem;
       margin-bottom: 1rem;
+      color: #2c3e50;
     }
+
     label {
       display: block;
-      font-weight: bold;
+      font-weight: 600;
       margin-top: 1rem;
     }
-    input, textarea, button {
+
+    input,
+    textarea,
+    select,
+    button {
       width: 100%;
-      padding: 0.5rem;
+      padding: 0.6rem;
       font-size: 1rem;
       margin-top: 0.25rem;
-      border: 1px solid #000;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       background: #fff;
       color: #000;
     }
+
     button {
       margin-top: 1.5rem;
       cursor: pointer;
+      background-color: #2c3e50;
+      color: #fff;
+      border: none;
+      font-weight: bold;
     }
+
+    button:hover {
+      background-color: #1a242f;
+    }
+
+    .logo-container {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo-container img {
+      max-height: 80px;
+    }
+
     section[aria-live="polite"] {
-      border-top: 1px solid #000;
+      border-top: 2px solid #2c3e50;
       margin-top: 2rem;
-      padding-top: 1rem;
+      padding-top: 1.5rem;
     }
+
     @media print {
-      button, form {
+      .no-print,
+      form {
         display: none;
+      }
+
+      body {
+        color: #000;
+        background: #fff;
+      }
+
+      section {
+        border: none;
       }
     }
   </style>
 </head>
+
 <body>
   <main>
-    <h1>Générateur de devis</h1>
-    <form id="quoteForm">
+
+    <h1 class="no-print">Création de devis - SKODA</h1>
+
+    <form id="quoteForm" class="no-print">
       <label for="nom">Nom</label>
       <input type="text" id="nom" name="nom" required>
 
@@ -61,10 +105,18 @@
       <label for="entreprise">Entreprise</label>
       <input type="text" id="entreprise" name="entreprise">
 
-      <label for="objet">Objet</label>
-      <input type="text" id="objet" name="objet" required>
+      <label for="modele">Modèle de voiture</label>
+      <select id="modele" name="modele" required>
+        <option value="">-- Choisir un modèle --</option>
+        <option value="Fabia">Skoda Fabia</option>
+        <option value="Octavia">Skoda Octavia</option>
+        <option value="Karoq">Skoda Karoq</option>
+        <option value="Kodiaq">Skoda Kodiaq</option>
+        <option value="Superb">Skoda Superb</option>
+        <option value="Enyaq">Skoda Enyaq</option>
+      </select>
 
-      <label for="prix">Prix (€)</label>
+      <label for="prix">Prix estimé (€)</label>
       <input type="number" id="prix" name="prix" required min="0" step="0.01">
 
       <label for="description">Description</label>
@@ -74,38 +126,60 @@
     </form>
 
     <section id="output" aria-live="polite">
-      <!-- Aperçu du devis ici -->
+      <!-- Résultat du devis -->
     </section>
   </main>
-
-  <noscript>
-    <p style="color: red; font-weight: bold;">Le JavaScript est désactivé. Vous pouvez tout de même imprimer le formulaire rempli manuellement.</p>
-  </noscript>
 
   <script>
     document.getElementById('quoteForm').addEventListener('submit', function (e) {
       e.preventDefault();
-
       const nom = document.getElementById('nom').value;
       const prenom = document.getElementById('prenom').value;
       const entreprise = document.getElementById('entreprise').value;
-      const objet = document.getElementById('objet').value;
+      const modele = document.getElementById('modele').value;
       const prix = document.getElementById('prix').value;
       const description = document.getElementById('description').value;
 
       const output = `
-        <h2>Aperçu du devis</h2>
+         <div class="logo-container">
+          <img src="logo_skoda.png" alt="Logo Skoda" width="100" height="100">
+        </div>
+        <h2>Devis personnalisé - Voiture SKODA</h2>
+
+        <h3>Informations de l'entreprise</h3>
+        <p><strong>Nom :</strong> Le Continent</p>
+        <p><strong>Adresse :</strong> 27 Bis Rue du Progrès, 93100 Montreuil</p>
+        <p><strong>Numéro SIRET :</strong> 493 361 372 00011</p>
+        <p><strong>Téléphone :</strong> 01 23 45 67 89</p>
+        <p><strong>Email :</strong> contact@lecontinent.fr</p>
+
+        <hr>
+
+        <h3>Informations client</h3>
         <p><strong>Nom :</strong> ${nom}</p>
         <p><strong>Prénom :</strong> ${prenom}</p>
-        <p><strong>Entreprise :</strong> ${entreprise}</p>
-        <p><strong>Objet :</strong> ${objet}</p>
+        ${entreprise ? `<p><strong>Entreprise :</strong> ${entreprise}</p>` : ''}
+
+        <hr>
+
+        <h3>Détails du devis</h3>
+        <p><strong>Modèle :</strong> Skoda ${modele}</p>
         <p><strong>Description :</strong> ${description}</p>
-        <p><strong>Montant :</strong> ${parseFloat(prix).toFixed(2)} €</p>
+        <p><strong>Montant estimé :</strong> ${parseFloat(prix).toFixed(2)} €</p>
         <p><em>Date :</em> ${new Date().toLocaleDateString('fr-FR')}</p>
-        <button onclick="window.print()">Imprimer</button>
+
+        <button class="no-print" onclick="window.print()">Imprimer</button>
+        <button class="no-print" onclick="annulerImpression()">Annuler</button>
       `;
+
       document.getElementById('output').innerHTML = output;
     });
+
+    function annulerImpression() {
+      document.getElementById('output').innerHTML = '';
+      document.getElementById('quoteForm').reset();
+    }
   </script>
 </body>
+
 </html>
