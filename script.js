@@ -61,11 +61,10 @@
       <h2>Devis personnalisé - Voiture SKODA</h2>
 
       <h3>Informations de l'entreprise</h3>
-      <p><strong>Nom :</strong> Le Continent</p>
-      <p><strong>Adresse :</strong> 27 Bis Rue du Progrès, 93100 Montreuil</p>
-      <p><strong>Numéro SIRET :</strong> 493 361 372 00011</p>
-      <p><strong>Téléphone :</strong> 01 23 45 67 89</p>
-      <p><strong>Email :</strong> contact@lecontinent.fr</p>
+      <p><strong>Nom :</strong> Škoda Villemomble - VGRF Grand Paris </p>
+      <p><strong>Adresse :</strong> 113 Av. de Rosny, 93250 Villemomble</p>
+      <p><strong>Téléphone :</strong> 09 69 39 09 04</p>
+      <p><strong>Email :</strong> contact@skoda.fr</p>
 
       <hr>
 
