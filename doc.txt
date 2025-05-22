@@ -1,0 +1,58 @@
+# Générateur de Devis - Skoda
+Ce projet est une application web permettant de générer rapidement un devis pour l’achat ou le leasing de véhicules Skoda.
+
+
+
+
+Structure du projet
+
+skoda-devis/
+│
+├── index.html       # Interface utilisateur avec le formulaire
+├── script.js        # Logique de génération de devis
+├── styles.css       # Mise en forme du site
+├── logo_skoda.png   # Logo affiché sur le devis (à ajouter)
+└── README.md        # Documentation du projet
+
+
+Fonctionnalités
+Sélection d’un modèle Skoda (Fabia, Octavia, etc.)
+
+Choix entre vente ou leasing (calcul sur 36 mois)
+
+Calcul automatique du prix HT et de la TVA (20 %)
+
+Génération d’un devis imprimable avec les infos client et entreprise
+
+Bouton d’impression et bouton d’annulation
+
+
+
+Technologies utilisées
+HTML5
+
+CSS3
+
+JavaScript (vanilla)
+
+
+Utilisation
+
+Ouvrir index.html dans un navigateur.
+
+Remplir le formulaire.
+
+Cliquer sur "Générer le devis".
+
+Le devis s’affiche avec possibilité de l’imprimer ou de l’annuler.
+
+
+Modèles et prix de base
+Modèle	Prix (€ HT)
+Fabia	15 000
+Octavia	22 000
+Karoq	28 000
+Kodiaq	32 000
+Superb	35 000
+Enyaq	40 000
+
