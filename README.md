@@ -2,12 +2,14 @@
 Une application web simple et efficace pour générer des devis personnalisés pour les véhicules Skoda.
 
 # Fonctionnalités,
-Formulaire de saisie des informations client,
-Sélection du modèle de véhicule Skoda,
-Calcul automatique des prix,
-Génération d'un devis professionnel et imprimable,
-Interface responsive et moderne,
-Support de l'impression,
+
+Formulaire de saisie des informations client  
+Sélection du modèle de véhicule Skoda  
+Calcul automatique du prix avec TVA  
+Génération d’un devis professionnel et imprimable  
+Interface responsive et moderne  
+Support de l’impression  
+**Accessibilité** : compatible avec les lecteurs d’écran et navigation 100% clavier  
 
 # Technologies utilisées,
 HTML5,
