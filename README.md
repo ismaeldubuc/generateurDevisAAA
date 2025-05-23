@@ -67,3 +67,13 @@ Vous pouvez personnaliser :
 Les couleurs dans styles.css,
 Les informations de l'entreprise dans script.js,
 Les modèles de voitures disponibles dans index.html,
+
+
+# Contributeurs
+- Ismael DUBUC
+- Aboubakar BAMBA 
+- Berol KUICHEU 
+- Alexendre ELIE 
+- Benjamin LECLERC  
+- Ezechiel FELTEN
+
