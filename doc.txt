@@ -1,58 +1,136 @@
-# Générateur de Devis - Skoda
-Ce projet est une application web permettant de générer rapidement un devis pour l’achat ou le leasing de véhicules Skoda.
+# Documentation Technique – Générateur de Devis Skoda
 
+Cette documentation technique est destinée aux développeurs qui souhaitent contribuer ou maintenir l'application **skoda-devis**.
 
+---
 
+## 1. Structure du Projet
 
-Structure du projet
-
+```
 skoda-devis/
-│
-├── index.html       # Interface utilisateur avec le formulaire
-├── script.js        # Logique de génération de devis
-├── styles.css       # Mise en forme du site
-├── logo_skoda.png   # Logo affiché sur le devis (à ajouter)
-└── README.md        # Documentation du projet
+├── index.html        # Interface HTML (formulaire utilisateur)
+├── script.js         # Logique JavaScript (calculs, DOM, génération de devis)
+├── styles.css        # Feuille de style CSS
+├── logo_skoda.png    # Image affichée dans le devis
+└── README.md         # Présentation générale du projet
+└── DOCUMENTATION.md  # Documentation technique (ce fichier)
+```
 
+---
 
-Fonctionnalités
-Sélection d’un modèle Skoda (Fabia, Octavia, etc.)
+## 2. Fonctionnement Général
 
-Choix entre vente ou leasing (calcul sur 36 mois)
+L'application permet à un utilisateur de :
 
-Calcul automatique du prix HT et de la TVA (20 %)
+* Choisir un modèle de voiture Skoda
+* Choisir un type d’achat (vente ou leasing)
+* Entrer ses informations personnelles
+* Générer un devis imprimable avec tous les détails
 
-Génération d’un devis imprimable avec les infos client et entreprise
+Le calcul de la **TVA (20%)** et du **montant total TTC** est automatisé via JavaScript. Le mode **leasing** divise le prix du véhicule par 36 mois.
 
-Bouton d’impression et bouton d’annulation
+---
 
+## 3. Détail des Fichiers
 
+### index.html
 
-Technologies utilisées
-HTML5
+Contient un formulaire avec :
 
-CSS3
+* Nom, prénom, entreprise (optionnel)
+* Sélecteur de modèle (`<select>`)
+* Type d’achat (`vente` ou `leasing`)
+* Champs pour le prix estimé et la TVA (readonly, remplis automatiquement)
+* Description libre
 
-JavaScript (vanilla)
+Affiche dynamiquement un devis sous forme HTML dans une `<section id="output">`.
 
+### script.js
 
-Utilisation
+#### 3.1 Données internes
 
-Ouvrir index.html dans un navigateur.
+```js
+const modelePrix = {
+  Fabia: 15000,
+  Octavia: 22000,
+  ...
+};
+```
 
-Remplir le formulaire.
+* Clé : nom du modèle
+* Valeur : prix HT (hors taxe)
 
-Cliquer sur "Générer le devis".
+#### 3.2 Mise à jour automatique du prix
 
-Le devis s’affiche avec possibilité de l’imprimer ou de l’annuler.
+Fonction `updatePrix()` :
 
+* Récupère le modèle et le type d’achat
+* Calcule le prix (prix de base ou prix / 36 pour leasing)
+* Met à jour les champs `prix` et `tva` dans le formulaire
 
-Modèles et prix de base
-Modèle	Prix (€ HT)
-Fabia	15 000
-Octavia	22 000
-Karoq	28 000
-Kodiaq	32 000
-Superb	35 000
-Enyaq	40 000
+#### 3.3 Génération du devis
 
+Fonction appelée à la soumission du formulaire :
+
+* Récupère les valeurs du formulaire
+* Calcule le total TTC
+* Génère dynamiquement un bloc HTML affichant toutes les informations
+* Ajoute deux boutons :
+
+  * `window.print()` pour imprimer
+  * `annulerImpression()` pour réinitialiser
+
+#### 3.4 Réinitialisation
+
+```js
+function annulerImpression() {
+  ...
+}
+```
+
+* Réinitialise le formulaire et efface le devis affiché.
+
+---
+
+### styles.css
+
+* Design sobre, adaptatif, centré sur la lisibilité
+* Utilisation de classes `no-print` pour ne pas imprimer les boutons
+* Affichage conditionnel de la section `<section id="output">`
+
+---
+
+## 4. À Savoir pour Contribuer
+
+* Le projet n’a pas de backend (tout est en front).
+* Il n’y a pas de persistance des données : chaque génération efface la précédente.
+* Le fichier `logo_skoda.png` doit être présent pour un affichage correct dans le devis.
+
+### Suggestions d'Amélioration :
+
+* Ajouter une exportation PDF (via `jsPDF`)
+* Stocker les devis générés (via localStorage ou backend)
+* Intégration d’une base de données pour les modèles
+* Responsivité mobile améliorée
+
+---
+
+## 5. Lancement en Local
+
+Aucun serveur requis. Pour lancer le projet :
+
+```bash
+cd skoda-devis
+start index.html
+```
+
+Ou ouvrir le fichier `index.html` directement dans votre navigateur.
+
+---
+
+## 6. Standards et Bonnes Pratiques
+
+* Utiliser ES6 (`const`, `let`, fonctions fléchées)
+* Code commenté, lisible et structuré
+* Ne pas modifier le DOM en dehors des événements utilisateurs
+* Création dynamique de HTML (via JS) plutôt que statique
